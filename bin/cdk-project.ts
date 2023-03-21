@@ -1,5 +1,16 @@
 #!/usr/bin/env node
-import {App, aws_ec2, aws_iam, CfnOutput, CfnParameter, CustomResource, Duration, Stack, StackProps} from "aws-cdk-lib";
+import {
+    App,
+    aws_ec2,
+    aws_iam,
+    CfnOutput,
+    CfnParameter,
+    CustomResource,
+    Duration,
+    SecretValue,
+    Stack,
+    StackProps
+} from "aws-cdk-lib";
 import {Bucket} from "aws-cdk-lib/aws-s3";
 import {Code, Runtime, Function} from "aws-cdk-lib/aws-lambda";
 import {AuroraMysqlEngineVersion, Credentials, DatabaseCluster, DatabaseClusterEngine} from "aws-cdk-lib/aws-rds";
@@ -207,17 +218,18 @@ import {Construct} from "constructs";
 // new WeChatStack(app,"weChat");
 
 const app = new App();
-
 export class MyPipelineStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
-        const pipeline = new CodePipeline(this, 'Pipeline', {
-            pipelineName: 'MyPipeline',
+        const pipeline = new CodePipeline(this, 'MyCDKPipeline', {
+            pipelineName: 'MyCDKPipeline',
             synth: new ShellStep('Synth', {
-                input: CodePipelineSource.gitHub('wpr7280/cdk_project', 'test01'),
-                commands: ['npm ci', 'npm run build', 'npx cdk synth']
+                input: CodePipelineSource.gitHub('wpr7280/cdk_project', 'test01',{
+                    authentication:  SecretValue.secretsManager('githubToken'),
+                }),
+                commands: ['npx cdk synth']
             })
         });
     }
 }
-new MyPipelineStack(app, 'MyPipelineStack');
+new MyPipelineStack(app, 'MyCDKPipelineStack');
