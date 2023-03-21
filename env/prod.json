@@ -1,0 +1,5 @@
+{
+  "vpcId": "prod-config",
+  "instanceType":"r5.xlarge"
+}
+
