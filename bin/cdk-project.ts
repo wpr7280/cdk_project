@@ -20,6 +20,8 @@ export class MyPipelineStack extends Stack {
                     authentication: SecretValue.secretsManager('githubToken'),
                 }),
                 commands: ['npm i',
+                    "npm -g uninstall aws-cdk",
+                    "npm -g install aws-cdk",
                     'npx cdk synth -v',]
             })
         });
