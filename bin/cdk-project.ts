@@ -19,9 +19,7 @@ export class MyPipelineStack extends Stack {
                 input: CodePipelineSource.gitHub('wpr7280/cdk_project', 'pipeline_01', {
                     authentication: SecretValue.secretsManager('githubToken'),
                 }),
-                commands: ['npm install',
-                    'npm ci',
-                    'npm run build',
+                commands: ['npm i',
                     'npx cdk synth',]
             })
         });
