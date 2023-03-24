@@ -20,7 +20,7 @@ export class MyPipelineStack extends Stack {
                     authentication: SecretValue.secretsManager('githubToken'),
                 }),
                 commands: ['npm i',
-                    'npx cdk synth',]
+                    'npx cdk synth -v',]
             })
         });
     }
