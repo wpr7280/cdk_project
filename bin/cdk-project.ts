@@ -22,7 +22,7 @@ export class MyPipelineStack extends Stack {
                 commands: ['npm i',
                     "npm -g uninstall aws-cdk",
                     "npm -g install aws-cdk",
-                    'npx cdk synth -v',]
+                    'cdk synth -v',]
             })
         });
     }
